@@ -1,13 +1,14 @@
 #include "CPU.h"
 #include<iostream>
 
-CPU::CPU(int processTime) {
+CPU::CPU(int processTime, int id) {
 	this->processTime = processTime;
 	this->nextFreeTime = 0;
+	this->id = id;
 }
 
 bool CPU::isBusy(int time) {
-	return time <= this->nextFreeTime;
+	return time < this->nextFreeTime;
 }
 
 void CPU::addQueue(CPUQueue* queue, int now) {
@@ -27,4 +28,15 @@ void CPU::addQueue(CPUQueue* queue, int now) {
 
 int CPU::getNextFreeTime() {
 	return this->nextFreeTime;
+}
+
+void CPU::run(int time, Process* process) {
+	std::cout << "t=" << time << " CPU" << this->id << " run process " << process->getName()<<
+		" start at " << time << " will end at " << time + this->processTime << std::endl;
+	this->nextFreeTime = time + this->processTime;
+	this->process = process;
+}
+
+int CPU::getProcessGenerator() {
+	return process->getGenerator();
 }

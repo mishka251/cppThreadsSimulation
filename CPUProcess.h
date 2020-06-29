@@ -6,12 +6,15 @@ protected:
 	int processesCount;
 	int processesMinDelta;
 	int processesMaxDelta;
-	int lastProcessTime;
-	int lasProcessId;
+
+	int nextProcessTime;
+	int generatedProcessesCount;
+	int id;
+
 public:
-	CPUProcess(int count, int minDelta, int maxDelta);
+	CPUProcess(int count, int minDelta, int maxDelta, int id);
 	Process* createProcess();
 	bool hasNext();
-	int getNowTime();
+	int getNextTime();
 };
 

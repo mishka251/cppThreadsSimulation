@@ -2,28 +2,31 @@
 #include<random>
 #include<iostream>
 
-CPUProcess::CPUProcess(int count, int minDelta, int maxDelta) {
+CPUProcess::CPUProcess(int count, int minDelta, int maxDelta, int id) {
 	this->processesCount = count;
 	this->processesMinDelta = minDelta;
 	this->processesMaxDelta = maxDelta;
-	this->lastProcessTime = 0;
-	this->lasProcessId = 0;
+	this->id = id;
+
+
+	this->nextProcessTime = this->processesMinDelta + rand() % (this->processesMaxDelta - this->processesMinDelta);
+	this->generatedProcessesCount = 0;
 }
 
 Process* CPUProcess::createProcess() {
-	this->lasProcessId++;
+	this->generatedProcessesCount++;
+
+	Process* process = new Process(this->generatedProcessesCount, this->nextProcessTime, this->id);
+	std::cout << "t=" << this->nextProcessTime << " generator" << this->id << " generate process " << this->generatedProcessesCount << std::endl;
 	int timeDelta = this->processesMinDelta + rand() % (this->processesMaxDelta - this->processesMinDelta);
-	this->lastProcessTime += timeDelta;
-	Process* process = new Process(this->lasProcessId, this->lastProcessTime);
-
-
+	this->nextProcessTime += timeDelta;
 	return process;
 }
 
 bool CPUProcess::hasNext() {
-	return this->lasProcessId < this->processesCount;
+	return this->generatedProcessesCount < this->processesCount;
 }
 
-int CPUProcess::getNowTime() {
-	return this->lastProcessTime;
+int CPUProcess::getNextTime() {
+	return this->nextProcessTime;
 }
