@@ -16,6 +16,6 @@ public:
 	int getNextFreeTime();
 	void run(int time, Process* process);
 	int getProcessGenerator();
-	//void free();
+	std::string getProcessName();
 };
 

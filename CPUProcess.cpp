@@ -1,6 +1,8 @@
 #include "CPUProcess.h"
 #include<random>
 #include<iostream>
+#include<limits.h>
+
 
 CPUProcess::CPUProcess(int count, int minDelta, int maxDelta, int id) {
 	this->processesCount = count;
@@ -19,7 +21,14 @@ Process* CPUProcess::createProcess() {
 	Process* process = new Process(this->generatedProcessesCount, this->nextProcessTime, this->id);
 	std::cout << "t=" << this->nextProcessTime << " generator" << this->id << " generate process " << this->generatedProcessesCount << std::endl;
 	int timeDelta = this->processesMinDelta + rand() % (this->processesMaxDelta - this->processesMinDelta);
-	this->nextProcessTime += timeDelta;
+
+	if (hasNext()) {
+		this->nextProcessTime += timeDelta;
+	}
+	else {
+		this->nextProcessTime = INT32_MAX;
+	}
+
 	return process;
 }
 

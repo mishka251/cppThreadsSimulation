@@ -31,7 +31,7 @@ int CPU::getNextFreeTime() {
 }
 
 void CPU::run(int time, Process* process) {
-	std::cout << "t=" << time << " CPU" << this->id << " run process " << process->getName()<<
+	std::cout << "t=" << time << " CPU" << this->id << " run process " << process->getName() <<
 		" start at " << time << " will end at " << time + this->processTime << std::endl;
 	this->nextFreeTime = time + this->processTime;
 	this->process = process;
@@ -39,4 +39,8 @@ void CPU::run(int time, Process* process) {
 
 int CPU::getProcessGenerator() {
 	return process->getGenerator();
+}
+
+std::string CPU::getProcessName() {
+	return this->process->getName();
 }
